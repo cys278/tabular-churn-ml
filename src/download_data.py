@@ -4,7 +4,7 @@ import os, shutil
 def download_telco_churn():
     # Download the dataset (from KaggleHub cache)
     path = kagglehub.dataset_download("blastchar/telco-customer-churn")
-    print("📥 Downloaded dataset to cache:", path)
+    print("Downloaded dataset to cache:", path)
 
     # Find the CSV inside
     csv_name = "WA_Fn-UseC_-Telco-Customer-Churn.csv"
