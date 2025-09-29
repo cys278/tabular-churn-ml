@@ -16,10 +16,10 @@ def download_telco_churn():
 
     # Copy only if not already there
     if not os.path.exists(dst):
-        shutil.copy(src, dst)
+        shutil.copy(src, dst) # if not, copy the CSV there
         print(f"Dataset copied to {dst}")
     else:
-        print(f"Dataset already exists at {dst}")
+        print(f"Dataset already exists at {dst}") # if yes, just print a message
 
     return dst
 
