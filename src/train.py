@@ -59,4 +59,23 @@ def train_and_eval():
     clf.fit(X_train,y_train)
 
 
+    # Evaluate
+
+    for split_name, X, y in [("Validation",X_val,y_val),("Test",X_test,y_test)]:
+        y_pred=clf.predict(X)
+        y_prob=clf.predict_proba(X)[:,1]
+        print(f"\n{split_name} Metrics")
+        print("AUC:",roc_auc_score(y,y_prob))
+        print("F1:",f1_score(y,y_pred))
+        print("Precision:",precision_score(y,y_pred))
+        print("Recall: ",recall_score(y,y_pred))
+        print("Confusion Matrix:\n",confusion_matrix(y,y_pred))
+
+if __name__=="__main__":
+    train_and_eval()
+
+
+
+
+
 
