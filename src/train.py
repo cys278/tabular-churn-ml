@@ -7,6 +7,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import(
     roc_auc_score,f1_score,precision_score,recall_score,confusion_matrix
 )
+import joblib
+import os
 
 PROCESSED_PATH="data/processed"
 
@@ -20,17 +22,18 @@ def load_splits():
     return X_train,X_val,X_test,y_train,y_val,y_test
 
 def train_and_eval():
-    #Load data
 
+    #Load data
     X_train,X_val,X_test,y_train,y_val,y_test=load_splits()
 
-    #Identify numeric and categorical columns
 
+    #Identify numeric and categorical columns
     numeric_features=X_train.select_dtypes(include=["int64","float64"]).columns
     categorical_features=X_train.select_dtypes(include=["object","bool"]).columns
 
-    # Preprocessing
 
+
+    # Preprocessing
     numeric_transformer=Pipeline(steps=[
         ("imputer",SimpleImputer(strategy="median")),
         ("scalar",StandardScaler())
@@ -70,6 +73,11 @@ def train_and_eval():
         print("Precision:",precision_score(y,y_pred))
         print("Recall: ",recall_score(y,y_pred))
         print("Confusion Matrix:\n",confusion_matrix(y,y_pred))
+
+    # Save the trained model
+    os.makedirs("models",exist_ok=True)
+    joblib.dump(clf,"models/churn_model.pkl")
+    print("\nModel Saved to models/churn_model.pkl")
 
 if __name__=="__main__":
     train_and_eval()
